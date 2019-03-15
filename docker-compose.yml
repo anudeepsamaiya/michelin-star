@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  web:
+    build:
+        context: .
+        dockerfile: ./Dockerfile
+    command: python /Project/app/manage.py migrate --noinput
+    command: python /Project/app/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./app:/Project/app
+    ports:
+      - 8000:8000
+    environment:
+      - SECRET_KEY="changemeinprod"
+
+  mysql:
+    container_name: michelin_mysql
+    restart: always
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 'test_pass' # TODO: Change this
+      MYSQL_USER: 'mychef'
+      MYSQL_PASS: 'silverspoon'
+    volumes:
+      - michelin-datavolume:/var/lib/mysql
+
+volumes:
+  michelin-datavolume:
