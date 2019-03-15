@@ -21,7 +21,7 @@ class ZOMATO_ENDPOINT:
 class RestaurantList(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
-    renderer_classes = (renderers.BrowsableAPIRenderer, renderers.JSONRenderer, renderers.TemplateHTMLRenderer,)
+    renderer_classes = (renderers.TemplateHTMLRenderer, renderers.BrowsableAPIRenderer, renderers.JSONRenderer,)
     template_name = 'restaurant/restaurant_list.html'
 
     def get(self, request, *args, **kwargs):
@@ -35,7 +35,7 @@ class RestaurantList(APIView):
 class RestaurantDetail(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
-    renderer_classes = (renderers.BrowsableAPIRenderer, renderers.JSONRenderer, renderers.TemplateHTMLRenderer,)
+    renderer_classes = (renderers.TemplateHTMLRenderer, renderers.BrowsableAPIRenderer, renderers.JSONRenderer,)
     serializer_class = RestaurantSerializer
     template_name = 'restaurant/restaurant.html'
 

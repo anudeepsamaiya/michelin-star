@@ -1,41 +1,47 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Restaurant Search</title>
+  <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-  <div>
-    <form action="" method="get">
-      <input placeholder='search' name="q"/> </input>
-      <button type="submit"> search </button>
-    </form>
-  </div>
-  <div>
-    <table>
-      <th>
-      <tr>
-        <td></td>
-        <td>Restaurant Name</td>
-        <td>Link</td>
-        <td>cuisine</td>
-        <td>user_rating</td>
-        <td>pricing info</td>
-      </tr>
-      </th>
-      <tbody>
-      {% for item in object.restaurants %}
-        <tr>
-          <td><img src={{item.restaurant.thumb}} height="30" width="30"/></td>
-          <td><a href="/restaurant/{{item.restaurant.R.res_id}}" target="_blank">{{item.restaurant.name}}</td>
-          <td><a href={{item.restaurant.url}} target="_blank">Visit Website</a></td>
-          <td>{{item.restaurant.cuisines}}</td>
-          <td>{{item.restaurant.user_rating.aggregate_rating}}/{{item.restaurant.user_rating.rating_text}}</td>
-          <td>{{item.restaurant.price_range}}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-    </table>
+  <div class="container">
+      <form action="" method="get" class="form-inline">
+        <div class="form-row">
+          <div class="col-md-3">
+            <input placeholder="search by name/cuisine/location" type="text" name="q"
+              class="form-control"/>
+          </div>
+          <button type="submit" class="btn btn-primary mb-2"> search </button>
+        <div>
+      </form>
+      <table class="table table-striped table-sm">
+        <thead class="thead-dark">
+          <tr>
+            <th>#</th>
+            <th>Restaurant Name</th>
+            <th>Link</th>
+            <th>cuisine</th>
+            <th>user_rating</th>
+            <th>pricing info</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for item in object.restaurants %}
+          <tr>
+            <td><img src="{{item.restaurant.thumb}}" height="20" width="30"/></td>
+            <td><a href="/restaurant/{{item.restaurant.R.res_id}}" target="_blank">{{item.restaurant.name}}</td>
+            <td><a href={{item.restaurant.url}} target="_blank">Visit Website</a></td>
+            <td>{{item.restaurant.cuisines}}</td>
+            <td>{{item.restaurant.user_rating.aggregate_rating}}/{{item.restaurant.user_rating.rating_text}}</td>
+            <td>{{item.restaurant.price_range}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
   </div>
 </body>
 </html>
