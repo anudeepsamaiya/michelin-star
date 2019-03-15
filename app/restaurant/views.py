@@ -7,6 +7,7 @@ from rest_framework import renderers
 from rest_framework.response import Response
 from rest_framework import status
 
+from restaurant.models import Restaurant
 from restaurant.serializers import RestaurantSerializer
 
 ZOMATO_REQUEST_KEY = "9296452f72997211acc2cd9dcc772b2b"
@@ -31,7 +32,7 @@ class RestaurantList(APIView):
         return Response({'object': response.json()})
 
 
-class Restaurant(APIView):
+class RestaurantDetail(APIView):
     authentication_classes = (SessionAuthentication, BasicAuthentication)
     permission_classes = (IsAuthenticated,)
     renderer_classes = (renderers.BrowsableAPIRenderer, renderers.JSONRenderer, renderers.TemplateHTMLRenderer,)
@@ -44,7 +45,15 @@ class Restaurant(APIView):
         headers = {'user-key': ZOMATO_REQUEST_KEY, 'content-type':'application/json'}
         response = requests.get(ZOMATO_ENDPOINT.restaurant, headers=headers,
                 params=params)
-        return Response({'object': response.json()})
+
+        res_id = kwargs.get('res_id')
+        obj = res_id and Restaurant.objects.filter(aggregator_id=res_id).last()
+        user_data = None
+        if obj:
+            serializer = RestaurantSerializer(obj)
+            user_data = serializer.data
+
+        return Response({'object': response.json(), 'user_data': user_data})
 
     def post(self, request, *args, **kwargs):
         serializer = RestaurantSerializer(data=request.data)
