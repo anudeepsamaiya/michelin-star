@@ -1,11 +1,21 @@
-<html>
-  <title> </title>
-  <head> </head>
-  <body>
-    <input placeholder='search'> </input>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant Search</title>
+</head>
+<body>
+  <div>
+    <form action="" method="get">
+      <input placeholder='search' name="q"/> </input>
+      <button type="submit"> search </button>
+    </form>
+  </div>
+  <div>
     <table>
       <th>
       <tr>
+        <td></td>
         <td>Restaurant Name</td>
         <td>Link</td>
         <td>cuisine</td>
@@ -13,9 +23,19 @@
         <td>pricing info</td>
       </tr>
       </th>
-      <tr>
-        <td></td>
-      </tr>
+      <tbody>
+      {% for item in object.restaurants %}
+        <tr>
+          <td><img src={{item.restaurant.thumb}} height="30" width="30"/></td>
+          <td><a href="/restaurant/{{item.restaurant.R.res_id}}" target="_blank">{{item.restaurant.name}}</td>
+          <td><a href={{item.restaurant.url}} target="_blank">Visit Website</a></td>
+          <td>{{item.restaurant.cuisines}}</td>
+          <td>{{item.restaurant.user_rating.aggregate_rating}}/{{item.restaurant.user_rating.rating_text}}</td>
+          <td>{{item.restaurant.price_range}}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
     </table>
-  </body>
+  </div>
+</body>
 </html>
