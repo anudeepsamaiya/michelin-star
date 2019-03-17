@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Restaurant Search{% endblock %}</title>
+  <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+  <div id="navbar">
+    {% block navbar %}
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog/">Blog</a></li>
+      </ul>
+    {% endblock %}
+  </div>
+
+  <div id="content">
+      {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
